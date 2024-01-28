@@ -1,25 +1,24 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const player = document.getElementById("player");
-    const ball = document.getElementById("ball");
-    const scoreDisplay = document.getElementById("score");
+function hitBall() {
+    const ball = document.createElement("div");
+    ball.className = "ball";
+    document.body.appendChild(ball);
 
-    let score = 0;
+    const startBottom = document.getElementById("bat").offsetTop + 50;
+    const endBottom = document.getElementById("ground").offsetTop;
+    const duration = 1000; // in milliseconds
 
-    ball.addEventListener("animationiteration", () => {
-        if (isHit()) {
-            score++;
-            scoreDisplay.textContent = `Score: ${score}`;
-        }
+    ball.style.bottom = startBottom + "px";
+
+    ball.animate([
+        { bottom: startBottom + "px" },
+        { bottom: endBottom + "px" }
+    ], {
+        duration: duration,
+        easing: "linear",
+        fill: "forwards"
     });
 
-    function isHit() {
-        const playerPosition = player.getBoundingClientRect();
-        const ballPosition = ball.getBoundingClientRect();
-
-        return (
-            ballPosition.bottom >= playerPosition.top &&
-            ballPosition.left >= playerPosition.left &&
-            ballPosition.right <= playerPosition.right
-        );
-    }
-});
+    setTimeout(() => {
+        document.body.removeChild(ball);
+    }, duration);
+}

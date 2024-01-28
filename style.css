@@ -1,52 +1,29 @@
-body, html {
-    height: 100%;
+body {
     margin: 0;
     overflow: hidden;
 }
 
-.ground {
-    height: 100%;
-    background-color: #8cc84b;
-    position: relative;
-}
-
-.player {
-    width: 50px;
-    height: 100px;
-    background-color: #333;
+#ground {
+    width: 100%;
+    height: 50px;
+    background-color: #4CAF50;
     position: absolute;
     bottom: 0;
+}
+
+#bat {
+    width: 50px;
+    height: 200px;
+    background-color: #8B4513;
+    position: absolute;
+    bottom: 50px;
     left: 50%;
     transform: translateX(-50%);
-    animation: playerAnimation 1s infinite alternate;
+    animation: swing 0.5s linear infinite alternate;
 }
 
-.ball {
-    width: 20px;
-    height: 20px;
-    background-color: #fff;
-    position: absolute;
-    bottom: 110px;
-    left: 50%;
-    transform: translateX(-50%);
-    animation: ballAnimation 2s infinite linear;
-}
-
-.score {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    color: #fff;
-    font-size: 24px;
-}
-
-@keyframes playerAnimation {
-    0% { transform: translateX(-50%) scaleY(1); }
-    100% { transform: translateX(-50%) scaleY(1.1); }
-}
-
-@keyframes ballAnimation {
-    0% { transform: translateX(-50%) translateY(110px); }
-    50% { transform: translateX(-50%) translateY(250px); }
-    100% { transform: translateX(-50%) translateY(110px); }
+@keyframes swing {
+    to {
+        transform: translateX(-50%) rotate(30deg);
+    }
 }
