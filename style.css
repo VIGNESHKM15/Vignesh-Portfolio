@@ -1,29 +1,4 @@
-.board {
-    display: grid;
-    grid-template-columns: repeat(20, 20px);
-    grid-gap: 1px;
-}
-
-.cell {
-    width: 20px;
-    height: 20px;
-    border: 1px solid #ddd;
-}
-
-.snake {
-    background-color: #4CAF50;
-    animation: snakeAnimation 0.2s linear infinite;
-}
-
-@keyframes snakeAnimation {
-    0%, 100% {
-        background-color: #4CAF50;
-    }
-    50% {
-        background-color: #45a049;
-    }
-}
-
-.food {
-    background-color: #FFD700;
+body {
+    margin: 0;
+    overflow: hidden;
 }

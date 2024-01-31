@@ -1,118 +1,49 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const board = document.getElementById("game-board");
-    const gridSize = 20;
-    let snake = [{ x: 2, y: 2 }];
-    let direction = "right";
-    let food = getRandomFoodPosition();
+// Set up the scene
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.getElementById("scene-container").appendChild(renderer.domElement);
 
-    function createBoard() {
-        for (let row = 0; row < gridSize; row++) {
-            for (let col = 0; col < gridSize; col++) {
-                const cell = document.createElement("div");
-                cell.classList.add("cell");
-                board.appendChild(cell);
-            }
-        }
-    }
+// Create a car
+const carGeometry = new THREE.BoxGeometry(1, 0.5, 0.5);
+const carMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+const car = new THREE.Mesh(carGeometry, carMaterial);
+scene.add(car);
 
-    function renderSnake() {
-        const cells = document.querySelectorAll(".cell");
-        cells.forEach(cell => cell.classList.remove("snake"));
+// Position the camera
+camera.position.z = 5;
 
-        snake.forEach(segment => {
-            const index = segment.x + segment.y * gridSize;
-            cells[index].classList.add("snake");
-        });
-    }
+// Add a rotating cube for demonstration
+const cubeGeometry = new THREE.BoxGeometry();
+const cubeMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+scene.add(cube);
 
-    function renderFood() {
-        const cells = document.querySelectorAll(".cell");
-        const index = food.x + food.y * gridSize;
-        cells[index].classList.add("food");
-    }
+// Animate the scene
+const animate = function () {
+    requestAnimationFrame(animate);
 
-    function getRandomFoodPosition() {
-        return {
-            x: Math.floor(Math.random() * gridSize),
-            y: Math.floor(Math.random() * gridSize)
-        };
-    }
+    // Rotate the car
+    car.rotation.x += 0.01;
+    car.rotation.y += 0.01;
 
-    function moveSnake() {
-        const head = Object.assign({}, snake[0]);
+    // Rotate the cube
+    cube.rotation.x += 0.01;
+    cube.rotation.y += 0.01;
 
-        switch (direction) {
-            case "up":
-                head.y = (head.y - 1 + gridSize) % gridSize;
-                break;
-            case "down":
-                head.y = (head.y + 1) % gridSize;
-                break;
-            case "left":
-                head.x = (head.x - 1 + gridSize) % gridSize;
-                break;
-            case "right":
-                head.x = (head.x + 1) % gridSize;
-                break;
-        }
+    renderer.render(scene, camera);
+};
 
-        snake.unshift(head);
+// Handle window resizing
+window.addEventListener('resize', function () {
+    const newWidth = window.innerWidth;
+    const newHeight = window.innerHeight;
 
-        if (head.x === food.x && head.y === food.y) {
-            food = getRandomFoodPosition();
-        } else {
-            snake.pop();
-        }
-    }
+    camera.aspect = newWidth / newHeight;
+    camera.updateProjectionMatrix();
 
-    function handleKeyPress(event) {
-        switch (event.key) {
-            case "ArrowUp":
-                direction = "up";
-                break;
-            case "ArrowDown":
-                direction = "down";
-                break;
-            case "ArrowLeft":
-                direction = "left";
-                break;
-            case "ArrowRight":
-                direction = "right";
-                break;
-        }
-    }
-
-    function checkCollision() {
-        const head = snake[0];
-        for (let i = 1; i < snake.length; i++) {
-            if (snake[i].x === head.x && snake[i].y === head.y) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    function updateGame() {
-        moveSnake();
-        renderSnake();
-        renderFood();
-
-        if (checkCollision()) {
-            alert("Game Over! You collided with yourself.");
-            resetGame();
-        }
-
-        setTimeout(updateGame, 200);
-    }
-
-    function resetGame() {
-        snake = [{ x: 2, y: 2 }];
-        direction = "right";
-        food = getRandomFoodPosition();
-        updateGame();
-    }
-
-    createBoard();
-    document.addEventListener("keydown", handleKeyPress);
-    updateGame();
+    renderer.setSize(newWidth, newHeight);
 });
+
+animate();
