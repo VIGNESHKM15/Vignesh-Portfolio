@@ -252,10 +252,10 @@
 }
 
 .img-fluid {
-    width: 400px;
-    margin-top: 4rem;
-    margin-bottom: 3rem;
-    transform: translatex(1.5rem);
+    width: 350px;
+    margin-top: 8rem;
+    margin-bottom: 7rem;
+    transform: translatex(10rem);
 }
 
 /* ICONS */
@@ -267,3 +267,15 @@
 .align-items-center {
     width: 100%;
 }
+
+@media only screen and (max-width: 600px) {
+    body{
+        margin-top: -6rem;
+    }
+    .img-fluid {
+        width: 250px;
+        margin-top: -2rem;
+        margin-bottom: 4.3rem;
+        transform: translatex(2.5rem);
+    }
+  }
