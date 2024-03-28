@@ -25,20 +25,6 @@
 }
 
 
-/*** Spinner ***/
-#spinner {
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity .5s ease-out, visibility 0s linear .5s;
-    z-index: 99999;
-}
-
-#spinner.show {
-    transition: opacity .5s ease-out, visibility 0s linear 0s;
-    visibility: visible;
-    opacity: 1;
-}
-
 
 /*** Button ***/
 .btn {
@@ -251,7 +237,7 @@
     padding-bottom: 30px !important;
 }
 
-.img-fluid {
+.img-fluidSS {
     width: 350px;
     margin-top: 8rem;
     margin-bottom: 7rem;
@@ -272,7 +258,10 @@
     body{
         margin-top: -6rem;
     }
-    .img-fluid {
+    .portfolio-img {
+        position: relative;
+    }
+    .img-fluidSS {
         width: 250px;
         margin-top: -2rem;
         margin-bottom: 4.3rem;
